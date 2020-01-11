@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,24 +29,18 @@ public class DownloadController {
 	private Button startButton;
 	private ObservableList listTextConsole;
 	private ObservableList listTextInfo;
-	private ExecutorService pool;
-	private List<ChannelDownload> list;
 	private long length;
 	private long progress = 0;
+
 	public void updateProgressBar(long progressThread) {
-		progress= progress+ progressThread;
-		progressBar.setProgress(progress/(double)length);
-	}
-	public void updateConsole(Text text) {
-		listTextConsole.add(text);
-		
+		progress = progress + progressThread;
+		progressBar.setProgress(progress / (double) length);
 	}
 
 	public void showInfo(String stringUrl, String thread) throws IOException, InterruptedException {
 		Download d = new Download();
 		d.setDownloadController(this);
-		list = d.getList();
-		pool = d.getPool();
+
 		listTextInfo = info.getChildren();
 		listTextConsole = console.getChildren();
 		listTextInfo.add(new Text("Địa chỉ: " + stringUrl + "\n"));
@@ -73,13 +65,11 @@ public class DownloadController {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-							d.pauseAllThread();
-						
-				
-					listTextConsole.add(new Text("pause \n"));
-					System.out.println("pause");
-				
+
+				d.pauseAllThread();
+
+				listTextConsole.add(new Text("pause \n"));
+				System.out.println("pause");
 
 			}
 		});
@@ -97,9 +87,9 @@ public class DownloadController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				d.setStringUrl(stringUrl);
-				d.setThread(thread);	
+				d.setThread(thread);
 				d.start();
-				
+
 			}
 		});
 	}

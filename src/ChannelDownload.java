@@ -3,11 +3,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.MappedByteBuffer;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-
-import javafx.scene.text.Text;
 
 public class ChannelDownload extends Thread {
 	private MappedByteBuffer mappedByteBuffer;
@@ -32,7 +27,7 @@ public class ChannelDownload extends Thread {
 
 	@Override
 	public void run() {
-		//downloadController.updateConsole(new Text("Start"));
+		// downloadController.updateConsole(new Text("Start"));
 		System.out.println("start");
 		byte[] data = new byte[1024];
 		int length;
@@ -60,7 +55,8 @@ public class ChannelDownload extends Thread {
 
 	public void resumeThread() throws IOException {
 		HttpURLConnection uConnection = (HttpURLConnection) url.openConnection();
-		uConnection.setRequestProperty("Range", "bytes=" + start+(mappedByteBuffer.capacity()-mappedByteBuffer.remaining()) + "-" + finish);
+		uConnection.setRequestProperty("Range",
+				"bytes=" + start + (mappedByteBuffer.capacity() - mappedByteBuffer.remaining()) + "-" + finish);
 		uConnection.connect();
 		bis = new BufferedInputStream(uConnection.getInputStream());
 		run();

@@ -1,4 +1,3 @@
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -11,8 +10,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javafx.scene.text.Text;
-
 public class Download extends Thread {
 
 	private List<ChannelDownload> list = new ArrayList<ChannelDownload>();
@@ -20,7 +17,7 @@ public class Download extends Thread {
 	private String stringUrl;
 	private String thread;
 	private DownloadController downloadController;
-	
+
 	public void setDownloadController(DownloadController downloadController) {
 		this.downloadController = downloadController;
 	}
@@ -40,13 +37,15 @@ public class Download extends Thread {
 	public ExecutorService getPool() {
 		return pool;
 	}
+
 	public void pauseAllThread() {
-		for(ChannelDownload channel: list) {
+		for (ChannelDownload channel : list) {
 			channel.pauseThread();
 		}
 	}
+
 	public void resumeAllThread() throws IOException {
-		for(ChannelDownload channel: list) {
+		for (ChannelDownload channel : list) {
 			channel.resumeThread();
 		}
 	}
@@ -103,11 +102,11 @@ public class Download extends Thread {
 			while (!pool.isTerminated()) {
 
 			}
-			
-			
-			  long finish = System.currentTimeMillis(); String s = "Thời gian download: " +
-			  (finish - start) + "ms"; System.out.println(s);
-			 
+
+			long finish = System.currentTimeMillis();
+			String s = "Thời gian download: " + (finish - start) + "ms";
+			System.out.println(s);
+
 			// listTextConsole.add(new Text(s));
 			fileChannel.close();
 			raf.close();
